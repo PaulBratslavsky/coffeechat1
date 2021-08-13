@@ -1,23 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+import { useFetchHook } from './hooks/useFetchHook'
 
 function App() {
+  const url = 'https://news-proxy-server.appspot.com/topstories'
+  const [result, error, isLoading] = useFetchHook(url)
+
+  console.log(result, error, isLoading, "from hook")
+
+  if (isLoading) return <h2>Loading...</h2>
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      put stuf here
+      { error && <p>Error: {error}</p> }
+      { result && 
+        result.map(item => <div key={item.id}>
+          <h2>{item.title}</h2>
+          <hr />
+        </div>)
+      }
     </div>
   );
 }
